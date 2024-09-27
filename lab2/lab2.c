@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
+int ClearStdin()
+{
+    int rv = 1;
+    int ch;
+    while (1) {
+        ch = getchar();
+        if (ch == '\n' || ch == EOF) {
+            break;
+        }
+        rv = 0;
+    }
+    return rv;
+}
+
 int main(void)
 {
     srand(time(NULL));
@@ -10,9 +24,22 @@ int main(void)
     for (int i = 1; i <= 10; i++)
     {
         int num;
-        printf("Введите число:\n");
-        scanf("%d", &num);
-        if (num == a)
+        int readCount;
+        int isEmpty;
+        while (1) {
+            printf("Введите число:\n");
+            readCount = scanf("%d", &num);
+            isEmpty = ClearStdin();
+            if (readCount == 1 && isEmpty != 0) {
+                break;
+            }
+            printf("Неверный формат числа\n");
+        }
+
+        if (0 > num || num > 100)
+            printf("Вы должны угадать число от 0 до 100\n");
+
+        else if (num == a)
         {
             printf("Вы угадали!\n");
             break;
@@ -25,8 +52,9 @@ int main(void)
         else if (num > a)
             printf("Вы ввели число большее загаданного\n");
 
-        else
+        else if (num < a)
             printf("Вы ввели число меньшее загаданного\n");
+        
         j = j + 1;
     }
 }
