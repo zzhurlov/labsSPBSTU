@@ -42,11 +42,27 @@ int main() {
     while (fscanf(file, "%s,", word) != EOF) {
         int length = strlen(word);
         int flag = 1;
+        int flag2 = 1;
+        int flag3 = 1;
 
         for (int k = 0; k < strlen(word); k++)
         {
             if (is_separator(word[k]))
                 word[k] = ' ';
+        }
+
+        for (int i = 0; i <= strlen(word); i++){
+            if (isdigit(word[i]) != 0){
+                flag2 = 0;
+                break;
+            }
+        }
+
+        for (int i = 0; i <= strlen(word); i++){
+            if (isspace(word[i]) != 0){
+                flag3 = 0;
+                break;
+            }
         }
 
 
@@ -70,8 +86,10 @@ int main() {
         // Проверка длины слова
         if (length < max_length) {
             // Сохранение слова в массив
-            strcpy(words[count], word);
-            count++;
+            if ((flag2 != 0) & (flag3 != 0)){
+                strcpy(words[count], word);
+                count++;
+            }
             if (count >= MAX_WORDS) {
                 break; // Ограничение на количество слов
             }
